@@ -1,0 +1,29 @@
+# Ignorar arquivos de ambiente
+.env
+
+# Ignorar executáveis gerados
+main
+telegram-form-bot
+
+# Ignorar arquivos de build
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignorar diretórios de cache do Go
+bin/
+obj/
+
+# Ignorar módulos baixados
+/vendor/
+
+# Ignorar arquivos temporários do editor
+*.swp
+*.swo
+*.tmp
+*.log
+
+# Ignorar arquivos específicos do sistema
+.DS_Store
+Thumbs.db
