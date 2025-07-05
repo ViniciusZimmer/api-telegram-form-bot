@@ -1,0 +1,16 @@
+services:
+  telegram-form-bot:
+    image: telegram-form-bot:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - PORT=8080
+      - API_URL=https://api.telegram.org/bot
+    volumes:
+      - .:/app
+    command: ["go", "run", "main.go"]
