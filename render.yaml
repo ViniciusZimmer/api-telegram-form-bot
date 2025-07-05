@@ -1,24 +1,15 @@
 services:
-  telegram-form-bot:
+  - type: web
+    name: telegram-form-bot
     envVars:
-      - key: NODE_ENV
-        value: staging
+      - key: TELEGRAM_CHAT_ID
+        sync: false # Defina no painel da Render
 
-      - key: APP_SECRET
-        generateValue: true
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false # Defina no painel da Render
 
-      - key: DB_URL
-        fromDatabase:
-          name: mydb
-          property: connectionString
+      - key: PORT
+        sync: false # Defina no painel da Render
 
-      - key: MINIO_ROOT_PASSWORD
-        fromService:
-          type: pserv
-          name: minio
-          envVarKey: MINIO_ROOT_PASSWORD
-
-      - key: STRIPE_API_KEY
-        sync: false
-
-      - fromGroup: my-env-group
+      - key: API_URL
+        sync: false # Defina no painel da Render
