@@ -58,6 +58,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		data.Name, data.Phone, data.Email, data.PlanType, data.Category, data.Value,
 	)
 
+	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
 	chatID := os.Getenv("TELEGRAM_CHAT_ID")
 
 	telegramPayload := TelegramMessage{
@@ -71,7 +72,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	apiURL := os.Getenv("API_URL")
 
 	resp, err := http.Post(
-		apiURL,
+		fmt.Sprintf("%s%s/sendMessage", apiURL, botToken),
 		"application/json",
 		bytes.NewBuffer(payloadBytes),
 	)
