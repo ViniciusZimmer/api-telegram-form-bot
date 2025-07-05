@@ -61,6 +61,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
 	chatID := os.Getenv("TELEGRAM_CHAT_ID")
 
+	fmt.Println("TELEGRAM_CHAT_ID:", chatID)
+	fmt.Println("TELEGRAM_BOT_TOKEN:", botToken)
+
 	telegramPayload := TelegramMessage{
 		ChatID:    chatID,
 		Text:      message,
@@ -70,6 +73,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	payloadBytes, _ := json.Marshal(telegramPayload)
 
 	apiURL := os.Getenv("API_URL")
+	fmt.Println("API_URL:", apiURL)
 
 	resp, err := http.Post(
 		fmt.Sprintf("%s%s/sendMessage", apiURL, botToken),
@@ -96,8 +100,10 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "8080" // fallback para desenvolvimento local
 	}
+	log.Printf("Servidor rodando na porta %s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 
 	log.Printf("Servidor rodando na porta %s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
