@@ -1,16 +1,24 @@
 services:
   telegram-form-bot:
-    image: telegram-form-bot:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-      - PORT=8080
-      - API_URL=https://api.telegram.org/bot
-    volumes:
-      - .:/app
-    command: ["go", "run", "main.go"]
+    envVars:
+      - key: NODE_ENV
+        value: staging
+
+      - key: APP_SECRET
+        generateValue: true
+
+      - key: DB_URL
+        fromDatabase:
+          name: mydb
+          property: connectionString
+
+      - key: MINIO_ROOT_PASSWORD
+        fromService:
+          type: pserv
+          name: minio
+          envVarKey: MINIO_ROOT_PASSWORD
+
+      - key: STRIPE_API_KEY
+        sync: false
+
+      - fromGroup: my-env-group
